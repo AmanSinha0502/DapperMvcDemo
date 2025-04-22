@@ -1,4 +1,4 @@
-the code for setting the databases 
+the code for setting the databases :
 
 -- Create the DapperMvcDemo database
 CREATE DATABASE DapperMvcDemo;
