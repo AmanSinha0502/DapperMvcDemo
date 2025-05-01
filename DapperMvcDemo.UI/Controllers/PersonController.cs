@@ -104,6 +104,23 @@ namespace DapperMvcDemo.UI.Controllers
             return View(people); // Return updated people list with DeptName
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllPeople()
+        {
+            var people = await _personRepo.GetAllAsync();
+            var departments = await _departmentRepo.GetAllAsync();
+
+            foreach (var person in people)
+            {
+                var department = departments.FirstOrDefault(d => d.DeptId == person.DeptId);
+                if (department != null)
+                {
+                    person.DeptName = department.DeptName;
+                }
+            }
+
+            return Json(people);
+        }
 
 
         public async Task<IActionResult> Delete(int id)
@@ -111,5 +128,10 @@ namespace DapperMvcDemo.UI.Controllers
             var deleteResult = await _personRepo.DeleteAsync(id);
             return RedirectToAction(nameof(DisplayAll));
         }
+        public IActionResult FromApi()
+        {
+            return View();
+        }
+
     }
 }
